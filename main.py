@@ -5,12 +5,16 @@ import plotly.express as px
 from plotly.offline import plot
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import datetime
+from ipywidgets import widgets
+from ipywidgets import interact, interact_manual
+import cufflinks as cf
 
 data = pd.read_csv('activities.csv')
 
 temp_time_speed = data.filter(['Activity Date','Activity Type','Elapsed Time','Distance', 'Relative Effort','Average Speed','Average Heart Rate','Calories','Apparent Temperature','Humidity','Wind Gust','Percipitation'],axis=1)
 temp_time_speed = temp_time_speed.drop(temp_time_speed[(temp_time_speed['Activity Type'] != 'Run')].index)
-dropdown=temp_time_speed.filter(['Elapsed Time','Average Speed'],axis=1)
+dropdown=temp_time_speed.filter(['Distacnce','Apparent Temperature','Elapsed Time','Average Speed'],axis=1)
 
 """ fig = go.Figure([go.Scatter(x=temp_time_speed['Activity Date'], y=temp_time_speed['Relative Effort'])])
 fig.update_xaxes(
@@ -72,7 +76,7 @@ fig.show() """
     ])
  """
 
-# Create figure with secondary y-axis
+""" # Create figure with secondary y-axis
 fig = make_subplots(specs=[[{"secondary_y": True}]])
 
 # Add traces
@@ -97,9 +101,26 @@ fig.update_xaxes(title_text="Date")
 # Set y-axes titles
 fig.update_yaxes(title_text="<b>Average Speed</b> km/h", secondary_y=False)
 fig.update_yaxes(title_text="<b>Temperature</b> deg Celsius", secondary_y=True)
+ """
 
-fig.show()
+""" measure_y1 = widgets.Dropdown(
+    description = 'Select Measure 1'
+    value = dropdown[]
+)
 
+x=widgets.Dropdown(
+
+) """
+
+@interact
+def scatter_plot(x=list(temp_time_speed['Activity Date'])
+                 y=list(dropdown.select_dtypes('number').columns)[1:],
+                 
+    
+    df.iplot(kind='line', x=x, y=y, 
+             xTitle=x.title(), yTitle=y.title(), 
+             text='title',
+             title=f'{y.title()} vs {x.title()}')
 
 
 
